@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mind MEEM - Jogo Cognitivo para Idosos com Design Gerontológico">
+    <meta name="theme-color" content="#1e40af">
+    <title>Mind MEEM - Launcher</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --success: #15803d;
+            --warning: #ea580c;
+            --danger: #dc2626;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            background: linear-gradient(135deg, var(--background) 0%, #e0e7ff 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--surface);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            padding: 48px 32px;
+            text-align: center;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 48px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 32px;
+        }
+
+        .status-section {
+            background: #f0f9ff;
+            border: 2px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .status-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e7f0;
+            font-size: 14px;
+        }
+
+        .status-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-label {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .status-value {
+            font-family: 'Courier New', monospace;
+            color: var(--text-light);
+            font-size: 12px;
+            padding: 4px 8px;
+            background: var(--background);
+            border-radius: 4px;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .status-indicator.running {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .status-indicator.loading {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .status-indicator.error {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        button, a.button {
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            min-height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: var(--background);
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+            border-color: var(--primary);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .icon {
+            font-size: 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 12px;
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .feature-text {
+            font-size: 12px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(30, 64, 175, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 32px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            button, a.button {
+                font-size: 14px;
+                padding: 14px 20px;
+                min-height: 56px;
+            }
+        }
+
+        .accessibility-note {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning);
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #92400e;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo">🧠</div>
+
+        <!-- Title -->
+        <h1>Mind MEEM</h1>
+        <p class="subtitle">Jogo Cognitivo para Idosos</p>
+
+        <!-- Status Section -->
+        <div class="status-section">
+            <div class="status-title">Status do Servidor</div>
+            <div class="status-item">
+                <span class="status-label">Frontend React</span>
+                <span class="status-indicator loading">
+                    <span class="dot"></span>
+                    Verificando...
+                </span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Localhost</span>
+                <span class="status-value" id="frontendPort">http://localhost:5173</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Versão</span>
+                <span class="status-value">0.1.0</span>
+            </div>
+        </div>
+
+        <!-- Main Button -->
+        <div class="buttons">
+            <button class="btn-primary" id="playButton" onclick="playGame()">
+                <span class="icon">▶️</span>
+                <span>Iniciar Jogo</span>
+            </button>
+            <button class="btn-secondary" id="docsButton" onclick="openDocs()">
+                <span class="icon">📖</span>
+                <span>Documentação</span>
+            </button>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">♿</div>
+                <div class="feature-text">Design Gerontológico</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔐</div>
+                <div class="feature-text">WCAG AAA Compliant</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">⌨️</div>
+                <div class="feature-text">Navegação por Teclado</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📊</div>
+                <div class="feature-text">Telemetria Completa</div>
+            </div>
+        </div>
+
+        <!-- Accessibility Note -->
+        <div class="accessibility-note">
+            💡 <strong>Dica:</strong> Este jogo foi desenvolvido com foco em acessibilidade para idosos. 
+            Todos os controles têm tamanho grande (mínimo 64px), alto contraste (WCAG AAA) e navegação por teclado.
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                Desenvolvido com ❤️ para pesquisa em cognição e gerontologia<br>
+                <a href="https://github.com/DrLeonardoPereira/Mind_MEEM" target="_blank">Ver no GitHub</a> | 
+                <a href=".devcontainer/README.md">Dev Container</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            frontendPort: 5173,
+            backendPort: 8000,
+            checkInterval: 1000,
+            maxRetries: 10
+        };
+
+        // Check server status on load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkServerStatus();
+            setupKeyboardShortcuts();
+        });
+
+        /**
+         * Check if frontend server is running
+         */
+        async function checkServerStatus() {
+            const statusIndicator = document.querySelector('.status-indicator');
+            const playButton = document.getElementById('playButton');
+            
+            let retries = 0;
+            const maxAttempts = CONFIG.maxRetries;
+
+            const checkServer = async () => {
+                try {
+                    const response = await fetch(`http://localhost:${CONFIG.frontendPort}/`, {
+                        method: 'HEAD',
+                        mode: 'no-cors'
+                    });
+                    
+                    // Server is running
+                    statusIndicator.classList.remove('loading');
+                    statusIndicator.classList.add('running');
+                    statusIndicator.innerHTML = `
+                        <span class="dot"></span>
+                        Em execução
+                    `;
+                    playButton.disabled = false;
+                    playButton.classList.remove('btn-disabled');
+                    
+                    console.log('✅ Frontend server está disponível');
+                } catch (error) {
+                    retries++;
+                    
+                    if (retries < maxAttempts) {
+                        setTimeout(checkServer, CONFIG.checkInterval);
+                    } else {
+                        // Server not running
+                        statusIndicator.classList.remove('loading');
+                        statusIndicator.classList.add('error');
+                        statusIndicator.innerHTML = `
+                            <span class="dot"></span>
+                            Aguardando servidor...
+                        `;
+                        playButton.disabled = true;
+                        playButton.classList.add('btn-disabled');
+                        
+                        console.log('⚠️ Frontend server não respondeu após ' + maxAttempts + ' tentativas');
+                    }
+                }
+            };
+
+            checkServer();
+        }
+
+        /**
+         * Launch the game
+         */
+        function playGame() {
+            const url = `http://localhost:${CONFIG.frontendPort}`;
+            
+            console.log('🎮 Iniciando jogo em:', url);
+            
+            // Try to open in current window or new tab
+            const win = window.open(url, '_blank');
+            
+            if (win === null) {
+                console.warn('⚠️ Pop-up bloqueado. Redirecionando na aba atual...');
+                window.location.href = url;
+            }
+        }
+
+        /**
+         * Open documentation
+         */
+        function openDocs() {
+            const docsUrl = 'https://github.com/DrLeonardoPereira/Mind_MEEM';
+            window.open(docsUrl, '_blank');
+        }
+
+        /**
+         * Setup keyboard shortcuts
+         */
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // Press Enter to play
+                if (e.key === 'Enter' && !e.ctrlKey && !e.metaKey) {
+                    const playButton = document.getElementById('playButton');
+                    if (!playButton.disabled) {
+                        playGame();
+                    }
+                }
+                
+                // Press D for documentation
+                if (e.key === 'd' || e.key === 'D') {
+                    openDocs();
+                }
+            });
+        }
+
+        /**
+         * Log version info
+         */
+        function logInfo() {
+            const info = `
+╔════════════════════════════════════════╗
+║      🎮 Mind MEEM - Game Launcher      ║
+╠════════════════════════════════════════╣
+║ Versão: 0.1.0                          ║
+║ Frontend: http://localhost:5173        ║
+║ Backend: http://localhost:8000         ║
+║ GitHub: DrLeonardoPereira/Mind_MEEM    ║
+╚════════════════════════════════════════╝
+
+Atalhos de Teclado:
+- ENTER: Iniciar jogo
+- D: Documentação
+
+Design Gerontológico:
+✅ Tamanhos mínimos: 64px (botões), 70px (cards)
+✅ Contraste WCAG AAA (7:1+)
+✅ Navegação por teclado completa
+✅ Alto contraste configurável
+            `;
+            console.log(info);
+        }
+
+        // Log info on load
+        logInfo();
+    </script>
+</body>
+</html>
